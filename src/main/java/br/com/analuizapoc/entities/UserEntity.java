@@ -3,6 +3,7 @@ package br.com.analuizapoc.entities;
 import br.com.analuizapoc.enums.UserEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,10 +14,11 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "USER")
+@Entity(name = "USERS")
 public class UserEntity {
 
     @Id
@@ -24,7 +26,6 @@ public class UserEntity {
     @Column(columnDefinition = "BINARY(16)")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
-
     private String email;
     private Long telephone;
     private String document;

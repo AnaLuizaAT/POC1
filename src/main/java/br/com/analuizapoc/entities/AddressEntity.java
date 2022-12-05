@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "USER")
+@Entity(name = "ADDRESS")
 public class AddressEntity {
 
     @Id
@@ -23,8 +23,7 @@ public class AddressEntity {
     @Column(columnDefinition = "BINARY(16)")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
-
-    private UUID user;
+    private UUID users;
     private String cep;
     private String city;
     private String state;
