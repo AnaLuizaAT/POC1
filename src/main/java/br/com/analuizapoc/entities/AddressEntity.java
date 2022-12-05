@@ -28,8 +28,8 @@ public class AddressEntity {
     private String cep;
     private String city;
     private String state;
-    private String street;
     private String number;
+    private String street;
     private String district;
     private boolean principal;
     private String observation;
