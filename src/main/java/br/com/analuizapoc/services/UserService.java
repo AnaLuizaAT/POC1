@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class UserService {
     private final UserRepository userRepository;
 
-    public void registerUser(UserRequest userRequest) {
+    public void register(UserRequest userRequest) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userRequest.getEmail());
         userEntity.setDocument(userRequest.getDocument().replaceAll("[^\\d ]", ""));
