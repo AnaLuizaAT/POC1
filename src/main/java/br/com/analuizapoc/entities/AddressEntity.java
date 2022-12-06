@@ -5,11 +5,8 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Builder
@@ -23,7 +20,11 @@ public class AddressEntity {
     @Column(columnDefinition = "BINARY(16)")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
-    private UUID users;
+
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID")
+    private UserEntity users;
+
     private String cep;
     private String city;
     private String state;
@@ -32,6 +33,6 @@ public class AddressEntity {
     private String district;
     private boolean principal;
     private String observation;
-    private LocalDate datUpdate;
-    private LocalDate datCreation;
+    private LocalDateTime dateUpdate;
+    private LocalDateTime dateCreation;
 }

@@ -6,6 +6,9 @@ import br.com.analuizapoc.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -16,7 +19,8 @@ public class UserService {
         userEntity.setEmail(userRequest.getEmail());
         userEntity.setDocument(userRequest.getDocument().replaceAll("[^\\d ]", ""));
         userEntity.setDocumentType(userRequest.getDocumentType());
-        userEntity.setTelephone(userRequest.getTelephone().replaceAll("[^\\d ]", ""));
+        userEntity.setTelephone(Long.valueOf(userRequest.getTelephone().replaceAll("[^\\d ]", "")));
+        userEntity.setDateCreation(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         userRepository.save(userEntity);
     }
 }
