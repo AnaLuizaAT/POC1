@@ -23,4 +23,9 @@ public class UserService {
         userEntity.setDateCreation(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         userRepository.save(userEntity);
     }
+
+//    public void register(UserRequest userRequest) {
+//        UserEntity userEntity = new UserEntity(userRequest);
+//        userRepository.save(userEntity);
+//    }
 }

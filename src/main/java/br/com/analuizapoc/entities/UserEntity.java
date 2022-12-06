@@ -1,5 +1,6 @@
 package br.com.analuizapoc.entities;
 
+import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.enums.UserEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
