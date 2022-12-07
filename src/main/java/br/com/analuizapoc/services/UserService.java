@@ -3,29 +3,23 @@ package br.com.analuizapoc.services;
 import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.repositories.UserRepository;
+import br.com.analuizapoc.utils.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
+    private final UserMapper userMapper = new UserMapper();
     public void register(UserRequest userRequest) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setEmail(userRequest.getEmail());
-        userEntity.setDocument(userRequest.getDocument().replaceAll("[^\\d ]", ""));
-        userEntity.setDocumentType(userRequest.getDocumentType());
-        userEntity.setTelephone(Long.valueOf(userRequest.getTelephone().replaceAll("[^\\d ]", "")));
-        userEntity.setDateCreation(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        UserEntity userEntity = userMapper.toEntity(userRequest);
         userRepository.save(userEntity);
     }
-
-//    public void register(UserRequest userRequest) {
-//        UserEntity userEntity = new UserEntity(userRequest);
-//        userRepository.save(userEntity);
-//    }
+    public Optional<UserEntity> findById(UUID id) {
+        return userRepository.findById(id);
+    }
 }

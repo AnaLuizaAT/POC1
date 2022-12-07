@@ -14,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity(name = "ADDRESS")
 public class AddressEntity {
-
     @Id
     @GeneratedValue(generator = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
