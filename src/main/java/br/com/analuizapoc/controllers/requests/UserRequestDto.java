@@ -1,18 +1,20 @@
-package br.com.analuizapoc.controllers.responses;
+package br.com.analuizapoc.controllers.requests;
 
 import br.com.analuizapoc.enums.UserEnum;
-import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
-public class UserResponse {
+public class UserRequestDto {
     private String email;
+
+    @NotEmpty(message = "The user telephone cannot be empty")
     private String telephone;
+
     private String document;
     private UserEnum documentType;
-    private LocalDateTime dateUpdate;
     private LocalDateTime dateCreation;
+    private LocalDateTime dateUpdate;
 }

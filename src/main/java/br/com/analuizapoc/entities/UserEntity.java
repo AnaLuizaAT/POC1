@@ -7,10 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -27,10 +26,24 @@ public class UserEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    @NotNull(message = "The user email cannot be null")
+    @NotEmpty(message = "The user email cannot be empty")
     private String email;
+
+    @NotNull(message = "The user telephone cannot be null")
     private Long telephone;
+
+    @NotNull(message = "The user email cannot be null")
+    @NotEmpty(message = "The user email cannot be empty")
     private String document;
+
+    @Enumerated
+    @NotNull(message = "The user email cannot be null")
     private UserEnum documentType;
+
+    @Column(name = "DT_UPDATE")
     private LocalDateTime dateUpdate;
+
+    @Column(name = "DT_CREATION", nullable = false)
     private LocalDateTime dateCreation;
 }

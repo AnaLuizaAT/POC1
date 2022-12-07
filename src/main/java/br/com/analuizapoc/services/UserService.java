@@ -1,12 +1,14 @@
 package br.com.analuizapoc.services;
 
-import br.com.analuizapoc.controllers.requests.UserRequest;
+import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.repositories.UserRepository;
-import br.com.analuizapoc.utils.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,12 +16,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final UserMapper userMapper = new UserMapper();
-    public void register(UserRequest userRequest) {
-        UserEntity userEntity = userMapper.toEntity(userRequest);
-        userRepository.save(userEntity);
+    private final ModelMapper mapper;
+
+    public void register(UserRequestDto userRequestDto) {
+        userRequestDto.setDateUpdate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        userRequestDto.setDateCreation(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        userRequestDto.setDocument(userRequestDto.getDocument().replaceAll("[^\\d ]", ""));
+        userRequestDto.setTelephone(String.valueOf(Long.valueOf(userRequestDto.getTelephone().replaceAll("[^\\d ]", ""))));
+        userRepository.save(mapper.map(userRequestDto, UserEntity.class));
     }
-    public Optional<UserEntity> findById(UUID id) {
-        return userRepository.findById(id);
+
+    public Optional<UserEntity> userById(UUID id) {
+        return this.userRepository.findById(id);
     }
 }

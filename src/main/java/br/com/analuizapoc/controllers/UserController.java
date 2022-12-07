@@ -1,6 +1,6 @@
 package br.com.analuizapoc.controllers;
 
-import br.com.analuizapoc.controllers.requests.UserRequest;
+import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,11 @@ public class UserController {
     private final UserService userService;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody UserRequest userRequest) {
-        userService.register(userRequest);
+    public void register(@RequestBody UserRequestDto userRequestDto) {
+        userService.register(userRequestDto);
     }
-
     @GetMapping("/{id}")
-    public Optional<UserEntity> findById(UUID id) {
-        findById(id);
+    public Optional<UserEntity> get(@PathVariable UUID id){
+        return userService.userById(id);
     }
 }
