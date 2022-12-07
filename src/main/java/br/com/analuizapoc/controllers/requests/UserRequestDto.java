@@ -3,15 +3,14 @@ package br.com.analuizapoc.controllers.requests;
 import br.com.analuizapoc.enums.UserEnum;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
-public class UserRequest {
+public class UserRequestDto {
     private String email;
-    private Long telephone;
+    private String telephone;
     private String document;
     private UserEnum documentType;
-    private LocalDate datUpdate;
-    private LocalDate datCreation;
-
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateUpdate;
 }
