@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -18,11 +22,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "USERS")
+@EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
 
     @Id
+    @Type(type = "uuid-char")
     @GeneratedValue(generator = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
@@ -41,9 +46,11 @@ public class UserEntity {
     @NotNull(message = "The user email cannot be null")
     private UserEnum documentType;
 
-    @Column(name = "DT_UPDATE")
-    private LocalDateTime dateUpdate;
-
+    @CreatedDate
     @Column(name = "DT_CREATION", nullable = false)
     private LocalDateTime dateCreation;
+
+    @LastModifiedDate
+    @Column(name = "DT_UPDATE")
+    private LocalDateTime dateUpdate;
 }

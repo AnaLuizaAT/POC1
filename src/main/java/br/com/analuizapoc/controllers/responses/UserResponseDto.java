@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UserResponseDto {
     private String email;
-    private String telephone;
+    private Long telephone;
     private String document;
     private UserEnum documentType;
     private LocalDateTime dateUpdate;
