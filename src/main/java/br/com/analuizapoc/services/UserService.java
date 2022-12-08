@@ -25,4 +25,8 @@ public class UserService {
     public Optional<UserEntity> findById(UUID id) {
         return this.userRepository.findById(id);
     }
+
+    public void deleteById(UUID id) {
+        userRepository.deleteById(id);
+    }
 }
