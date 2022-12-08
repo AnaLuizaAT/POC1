@@ -16,13 +16,20 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@Valid @RequestBody UserRequestDto userRequestDto) {
         userService.register(userRequestDto);
     }
+
     @GetMapping("/{id}")
-    public Optional<UserEntity> get(@PathVariable UUID id){
+    public Optional<UserEntity> get(@PathVariable UUID id) {
         return userService.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable UUID id) {
+        userService.deleteById(id);
     }
 }
