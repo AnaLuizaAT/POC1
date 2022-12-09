@@ -29,4 +29,10 @@ public class UserService {
     public void deleteById(UUID id) {
         userRepository.deleteById(id);
     }
+
+    public UserEntity updateById(UUID id, UserRequestDto userRequestDto) {
+        UserEntity userEntity = userMapper.toEntityUpdate(id, userRequestDto);
+        userRepository.save(userEntity);
+        return userEntity;
+    }
 }
