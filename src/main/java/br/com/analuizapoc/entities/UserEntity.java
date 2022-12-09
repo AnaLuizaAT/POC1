@@ -21,6 +21,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "USERS")
 @Entity(name = "USERS")
 @EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
@@ -31,19 +32,23 @@ public class UserEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    @Column(name = "EMAIL")
     @NotNull(message = "The user email cannot be null")
     @NotEmpty(message = "The user email cannot be empty")
     private String email;
 
+    @Column(name = "TELEPHONE")
     @NotNull(message = "The user telephone cannot be null")
     private Long telephone;
 
-    @NotNull(message = "The user email cannot be null")
-    @NotEmpty(message = "The user email cannot be empty")
+    @Column(name = "DOCUMENT")
+    @NotNull(message = "The user document cannot be null")
+    @NotEmpty(message = "The user document cannot be empty")
     private String document;
 
     @Enumerated
-    @NotNull(message = "The user email cannot be null")
+    @Column(name = "DOCUMENT_TYPE")
+    @NotNull(message = "The user document type cannot be null")
     private UserEnum documentType;
 
     @CreatedDate
@@ -53,4 +58,5 @@ public class UserEntity {
     @LastModifiedDate
     @Column(name = "DT_UPDATE")
     private LocalDateTime dateUpdate;
+
 }

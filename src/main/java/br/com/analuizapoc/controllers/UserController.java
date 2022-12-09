@@ -2,6 +2,7 @@ package br.com.analuizapoc.controllers;
 
 import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
+import br.com.analuizapoc.repositories.UserRepository;
 import br.com.analuizapoc.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -24,12 +26,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<UserEntity> get(@PathVariable UUID id) {
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<UserEntity> getById(@PathVariable UUID id) {
         return userService.findById(id);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID id) {
         userService.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public UserEntity userRequestDto (@PathVariable UUID id, @RequestBody UserRequestDto userRequestDto){
+        return userService.updateById(id, userRequestDto);
     }
 }
