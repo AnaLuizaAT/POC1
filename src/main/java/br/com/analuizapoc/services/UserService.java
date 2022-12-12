@@ -4,17 +4,18 @@ import br.com.analuizapoc.configuration.UserMapper;
 import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    UserMapper userMapper = new UserMapper();
+
+    private final UserMapper userMapper;
 
     public void register(UserRequestDto userRequestDto) {
         UserEntity userEntity = userMapper.toEntity(userRequestDto);
@@ -27,5 +28,10 @@ public class UserService {
 
     public void deleteById(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    public void updateById(UUID id, UserRequestDto userRequestDto) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
+        userRepository.save(userMapper.toUpdateEntity(userRequestDto, userEntity));
     }
 }

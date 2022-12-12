@@ -2,13 +2,10 @@ package br.com.analuizapoc.configuration;
 
 import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
-import br.com.analuizapoc.repositories.UserRepository;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.UUID;
-
+@Configuration
 public class UserMapper {
-    private UserRepository userRepository;
-
     private static final String removeMask = "[^\\d ]";
 
     public UserEntity toEntity(UserRequestDto userRequestDto) {
@@ -20,8 +17,7 @@ public class UserMapper {
         return userEntity;
     }
 
-    public UserEntity toUpdateEntity(UUID id, UserRequestDto userUpdateDto) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
+    public UserEntity toUpdateEntity(UserRequestDto userUpdateDto, UserEntity userEntity) {
         userEntity.setEmail(userUpdateDto.getEmail());
         userEntity.setDocument(userUpdateDto.getDocument().replaceAll(removeMask, ""));
         userEntity.setDocumentType(userUpdateDto.getDocumentType());

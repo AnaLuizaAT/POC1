@@ -2,7 +2,6 @@ package br.com.analuizapoc.controllers;
 
 import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
-import br.com.analuizapoc.repositories.UserRepository;
 import br.com.analuizapoc.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-    private final UserRepository userRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -39,12 +37,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserEntity updateById(@PathVariable UUID id, @RequestBody UserRequestDto userUpdateDto) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
-        userEntity.setEmail(userUpdateDto.getEmail());
-        userEntity.setDocument(userUpdateDto.getDocument());
-        userEntity.setDocumentType(userUpdateDto.getDocumentType());
-        userEntity.setTelephone(Long.valueOf(userUpdateDto.getTelephone()));
-        return userRepository.save(userEntity);
+    public void updateById(@PathVariable UUID id, @RequestBody UserRequestDto userRequestDto) {
+        userService.updateById(id, userRequestDto);
     }
 }
