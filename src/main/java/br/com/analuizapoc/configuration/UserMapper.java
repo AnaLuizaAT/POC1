@@ -18,12 +18,12 @@ public class UserMapper {
         return userEntity;
     }
 
-    public UserEntity toEntityUpdate(UUID id, UserRequestDto userRequestDtoUpdate) {
+    public UserEntity toUpdateEntity(UUID id, UserRequestDto userUpdateDto) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
-        userEntity.setEmail(userRequestDtoUpdate.getEmail());
-        userEntity.setDocument(userRequestDtoUpdate.getDocument());
-        userEntity.setDocumentType(userRequestDtoUpdate.getDocumentType());
-        userEntity.setTelephone(Long.valueOf(userRequestDtoUpdate.getTelephone()));
-        return userRepository.save(userEntity);
+        userEntity.setEmail(userUpdateDto.getEmail());
+        userEntity.setDocument(userUpdateDto.getDocument());
+        userEntity.setDocumentType(userUpdateDto.getDocumentType());
+        userEntity.setTelephone(Long.valueOf(userUpdateDto.getTelephone()));
+        return userEntity;
     }
 }

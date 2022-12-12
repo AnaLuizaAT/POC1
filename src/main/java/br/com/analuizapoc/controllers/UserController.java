@@ -39,7 +39,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserEntity userRequestDto (@PathVariable UUID id, @RequestBody UserRequestDto userRequestDto){
-        return userService.updateById(id, userRequestDto);
+    public UserEntity updateById(@PathVariable UUID id, @RequestBody UserRequestDto userUpdateDto) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
+        userEntity.setEmail(userUpdateDto.getEmail());
+        userEntity.setDocument(userUpdateDto.getDocument());
+        userEntity.setDocumentType(userUpdateDto.getDocumentType());
+        userEntity.setTelephone(Long.valueOf(userUpdateDto.getTelephone()));
+        return userRepository.save(userEntity);
     }
 }
