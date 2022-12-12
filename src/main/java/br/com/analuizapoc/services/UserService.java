@@ -14,8 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    private final UserMapper userMapper = new UserMapper();
+    UserMapper userMapper = new UserMapper();
 
     public void register(UserRequestDto userRequestDto) {
         UserEntity userEntity = userMapper.toEntity(userRequestDto);
@@ -23,16 +22,10 @@ public class UserService {
     }
 
     public Optional<UserEntity> findById(UUID id) {
-        return this.userRepository.findById(id);
+        return userRepository.findById(id);
     }
 
     public void deleteById(UUID id) {
         userRepository.deleteById(id);
-    }
-
-    public UserEntity updateById(UUID id, UserRequestDto userRequestDto) {
-        UserEntity userEntity = userMapper.toEntityUpdate(id, userRequestDto);
-        userRepository.save(userEntity);
-        return userEntity;
     }
 }
