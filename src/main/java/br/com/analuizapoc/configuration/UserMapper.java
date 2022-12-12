@@ -9,21 +9,23 @@ import java.util.UUID;
 public class UserMapper {
     private UserRepository userRepository;
 
+    private static final String removeMask = "[^\\d ]";
+
     public UserEntity toEntity(UserRequestDto userRequestDto) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userRequestDto.getEmail());
-        userEntity.setDocument(userRequestDto.getDocument().replaceAll("[^\\d ]", ""));
+        userEntity.setDocument(userRequestDto.getDocument().replaceAll(removeMask, ""));
         userEntity.setDocumentType(userRequestDto.getDocumentType());
-        userEntity.setTelephone(Long.valueOf(userRequestDto.getTelephone().replaceAll("[^\\d ]", "")));
+        userEntity.setTelephone(Long.valueOf(userRequestDto.getTelephone().replaceAll(removeMask, "")));
         return userEntity;
     }
 
     public UserEntity toUpdateEntity(UUID id, UserRequestDto userUpdateDto) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
         userEntity.setEmail(userUpdateDto.getEmail());
-        userEntity.setDocument(userUpdateDto.getDocument());
+        userEntity.setDocument(userUpdateDto.getDocument().replaceAll(removeMask, ""));
         userEntity.setDocumentType(userUpdateDto.getDocumentType());
-        userEntity.setTelephone(Long.valueOf(userUpdateDto.getTelephone()));
+        userEntity.setTelephone(Long.valueOf(userUpdateDto.getTelephone().replaceAll(removeMask, "")));
         return userEntity;
     }
 }
