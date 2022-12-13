@@ -1,7 +1,7 @@
 package br.com.analuizapoc.services.implementations;
 
 import br.com.analuizapoc.configuration.UserMapper;
-import br.com.analuizapoc.controllers.requests.UserRequestDto;
+import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.repositories.UserRepository;
 import br.com.analuizapoc.services.UserService;
@@ -20,8 +20,8 @@ public class UserServiceImplementation implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public void register(UserRequestDto userRequestDto) {
-        UserEntity userEntity = userMapper.toEntity(userRequestDto);
+    public void register(UserRequest userRequest) {
+        UserEntity userEntity = userMapper.toEntity(userRequest);
         userRepository.save(userEntity);
     }
 
@@ -41,8 +41,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void updateById(UUID id, UserRequestDto userRequestDto) {
+    public void updateById(UUID id, UserRequest userRequest) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
-        userRepository.save(userMapper.toUpdateEntity(userRequestDto, userEntity));
+        userRepository.save(userMapper.toUpdateEntity(userRequest, userEntity));
     }
 }

@@ -4,7 +4,7 @@ import br.com.analuizapoc.entities.UserEntity;
 import lombok.Data;
 
 @Data
-public class AddressRequestDto {
+public class AddressRequest {
     private String cep;
     private String number;
     private UserEntity userId;

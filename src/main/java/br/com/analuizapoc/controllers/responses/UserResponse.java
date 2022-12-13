@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserResponseDto {
+public class UserResponse {
     private String email;
     private Long telephone;
     private String document;

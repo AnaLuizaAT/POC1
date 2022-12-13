@@ -4,7 +4,7 @@ import br.com.analuizapoc.enums.UserEnum;
 import lombok.Data;
 
 @Data
-public class UserRequestDto {
+public class UserRequest {
     private String email;
     private String telephone;
     private String document;
