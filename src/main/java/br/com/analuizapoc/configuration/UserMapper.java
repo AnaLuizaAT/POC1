@@ -1,6 +1,6 @@
 package br.com.analuizapoc.configuration;
 
-import br.com.analuizapoc.controllers.requests.UserRequestDto;
+import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.entities.UserEntity;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Configuration;
 public class UserMapper {
     private static final String removeMask = "[^\\d ]";
 
-    public UserEntity toEntity(UserRequestDto userRequestDto) {
+    public UserEntity toEntity(UserRequest userRequest) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setEmail(userRequestDto.getEmail());
-        userEntity.setDocument(userRequestDto.getDocument().replaceAll(removeMask, ""));
-        userEntity.setDocumentType(userRequestDto.getDocumentType());
-        userEntity.setTelephone(Long.valueOf(userRequestDto.getTelephone().replaceAll(removeMask, "")));
+        userEntity.setEmail(userRequest.getEmail());
+        userEntity.setDocument(userRequest.getDocument().replaceAll(removeMask, ""));
+        userEntity.setDocumentType(userRequest.getDocumentType());
+        userEntity.setTelephone(Long.valueOf(userRequest.getTelephone().replaceAll(removeMask, "")));
         return userEntity;
     }
 
-    public UserEntity toUpdateEntity(UserRequestDto userUpdateDto, UserEntity userEntity) {
+    public UserEntity toUpdateEntity(UserRequest userUpdateDto, UserEntity userEntity) {
         userEntity.setEmail(userUpdateDto.getEmail());
         userEntity.setDocument(userUpdateDto.getDocument().replaceAll(removeMask, ""));
         userEntity.setDocumentType(userUpdateDto.getDocumentType());

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AddressResponseDto {
+public class AddressResponse {
     private UserEntity user;
     private String cep;
     private String city;
