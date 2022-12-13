@@ -12,16 +12,17 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS")
 @Entity(name = "USERS")
 @EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
@@ -32,31 +33,31 @@ public class UserEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @Column(name = "EMAIL")
-    @NotNull(message = "The user email cannot be null")
-    @NotEmpty(message = "The user email cannot be empty")
+    @Column
+    @NotBlank(message = "The User Email cannot be blank")
     private String email;
 
-    @Column(name = "TELEPHONE")
+    @Column
     @NotNull(message = "The user telephone cannot be null")
     private Long telephone;
 
-    @Column(name = "DOCUMENT")
-    @NotNull(message = "The user document cannot be null")
-    @NotEmpty(message = "The user document cannot be empty")
+    @Column
+    @NotBlank(message = "The User Document cannot be blank")
     private String document;
 
+    @Column
     @Enumerated
-    @Column(name = "DOCUMENT_TYPE")
     @NotNull(message = "The user document type cannot be null")
     private UserEnum documentType;
 
-    @CreatedDate
-    @Column(name = "DT_CREATION", nullable = false)
-    private LocalDateTime dateCreation;
-
+    @Column
     @LastModifiedDate
-    @Column(name = "DT_UPDATE")
     private LocalDateTime dateUpdate;
 
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime dateCreation;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<AddressEntity> addressList = new ArrayList<>();
 }

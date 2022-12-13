@@ -1,37 +1,20 @@
 package br.com.analuizapoc.services;
 
-import br.com.analuizapoc.configuration.UserMapper;
 import br.com.analuizapoc.controllers.requests.UserRequestDto;
 import br.com.analuizapoc.entities.UserEntity;
-import br.com.analuizapoc.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
-@AllArgsConstructor
-public class UserService {
-    private final UserRepository userRepository;
+public interface UserService {
+    void register(UserRequestDto userRequestDto);
 
-    private final UserMapper userMapper;
+    Optional<UserEntity> findById(UUID id);
 
-    public void register(UserRequestDto userRequestDto) {
-        UserEntity userEntity = userMapper.toEntity(userRequestDto);
-        userRepository.save(userEntity);
-    }
+    List<UserEntity> findAll();
 
-    public Optional<UserEntity> findById(UUID id) {
-        return userRepository.findById(id);
-    }
+    void deleteById(UUID id);
 
-    public void deleteById(UUID id) {
-        userRepository.deleteById(id);
-    }
-
-    public void updateById(UUID id, UserRequestDto userRequestDto) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
-        userRepository.save(userMapper.toUpdateEntity(userRequestDto, userEntity));
-    }
+    void updateById(UUID id, UserRequestDto userRequestDto);
 }
