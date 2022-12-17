@@ -1,11 +1,21 @@
 package br.com.analuizapoc.controllers.requests;
 
-import br.com.analuizapoc.entities.UserEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressRequest {
-    private String cep;
+
+    private UUID userId;
+    private String observation;
+    private Boolean mainAddress;
+
+    @NotBlank
     private String number;
-    private UserEntity userId;
 }

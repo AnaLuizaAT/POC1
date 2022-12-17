@@ -1,5 +1,7 @@
 package br.com.analuizapoc.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +20,25 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ADDRESSES")
+@Table(name = "addresses")
+@Entity(name = "addresses")
 @EntityListeners(AuditingEntityListener.class)
 public class AddressEntity {
+
+    private String cep;
+    private String city;
+    private String state;
+    private String number;
+    private String street;
+    private String complement;
+    private String neighborhood;
+
+    @JsonIgnore
+    private Boolean mainAddress;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private UserEntity user;
 
     @Id
     @Type(type = "uuid-char")
@@ -28,39 +46,13 @@ public class AddressEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private UserEntity user;
-
-    @Column(nullable = false)
-    private String cep;
-
-    @Column
-    private String city;
-
-    @Column
-    private String state;
-
-    @Column(nullable = false)
-    private String number;
-
-    @Column
-    private String street;
-
-    @Column
-    private String district;
-
-    @Column(nullable = false)
-    private boolean principal;
-
-    @Column
-    private String observation;
-
-    @Column
-    @LastModifiedDate
-    private LocalDateTime dateUpdate;
-
     @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime dateCreation;
+    @Column(nullable = false, name = "DATE_CREATED")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateCreated;
+
+    @LastModifiedDate
+    @Column(name = "DATE_UPDATED")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateUpdated;
 }
