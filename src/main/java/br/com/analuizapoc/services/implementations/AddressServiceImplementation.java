@@ -41,7 +41,7 @@ public class AddressServiceImplementation implements AddressService, CepService 
         return null;
     }
 
-    public AddressEntity save(AddressRequest addressRequest, String cep) {
+    public AddressEntity save(AddressRequest addressRequest, String cep, UUID id) {
         AddressResponse addressResponse = cepService.getCep(cep);
         UserEntity userEntity = userService.findById(addressRequest.getUserId());
         AddressEntity addressEntity = mapper.toEntity(addressResponse, addressRequest, userEntity);

@@ -18,10 +18,10 @@ public class UserMapper {
         userResponse.setId(userEntity.getId());
         userResponse.setEmail(userEntity.getEmail());
         userResponse.setDocument(userEntity.getDocument());
-        userResponse.setTelephone(userResponse.getTelephone());
-        userEntity.setDateUpdated(userResponse.getDateUpdated());
+        userResponse.setTelephone(userEntity.getTelephone());
+        userResponse.setDateUpdated(userEntity.getDateUpdated());
+        userResponse.setDateCreated(userEntity.getDateCreated());
         userResponse.setDocumentType(userEntity.getDocumentType());
-        userResponse.setDateCreated(userResponse.getDateCreated());
         userResponse.setAddressResponseList(userEntity.getAddressList().stream().map(AddressMapper::toAddressDto).collect(Collectors.toList()));
         return userResponse;
     }

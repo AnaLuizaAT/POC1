@@ -35,18 +35,18 @@ public class UserEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @NotBlank(message = "The User Email cannot be blank")
+    @NotBlank
     private String email;
 
-    @NotNull(message = "The user telephone cannot be null")
+    @NotNull
     private Long telephone;
 
-    @NotBlank(message = "The User Document cannot be blank")
+    @NotBlank
     private String document;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "DOCUMENT_TYPE")
-    @NotNull(message = "The user document type cannot be null")
     private UserEnum documentType;
 
     @CreatedDate

@@ -12,7 +12,7 @@ public interface AddressService {
 
     AddressEntity findById(UUID id);
 
-    AddressEntity save(AddressRequest addressRequest, String cep);
+    AddressEntity save(AddressRequest addressRequest, String cep, UUID id);
 
     AddressEntity updateById(UUID id, AddressRequest addressRequest);
 }

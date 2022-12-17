@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+import static br.com.analuizapoc.controllers.mappers.AddressMapper.toAddressDto;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/address")
+@RequestMapping("/v1/addresses")
 public class AddressController {
 
     private final AddressService addressService;
@@ -28,6 +30,6 @@ public class AddressController {
     @PostMapping("/{cep}")
     @ResponseStatus(HttpStatus.CREATED)
     public AddressResponse save(@Valid @RequestBody AddressRequest addressRequest, @PathVariable String cep, UUID user_id) {
-        return
+        return toAddressDto(addressService.save(addressRequest, cep, user_id));
     }
 }

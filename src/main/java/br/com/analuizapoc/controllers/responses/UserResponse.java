@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +26,6 @@ public class UserResponse {
     private Long telephone;
     private String document;
     private UserEnum documentType;
-    private List<AddressResponse> addressResponseList;
 
     @CreatedDate
     @Column(nullable = false, name = "DATE_CREATED")
@@ -36,4 +36,6 @@ public class UserResponse {
     @Column(name = "DATE_UPDATED")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateUpdated;
+
+    private List<AddressResponse> addressResponseList;
 }
