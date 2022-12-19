@@ -6,9 +6,10 @@ import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.repositories.UserRepository;
 import br.com.analuizapoc.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,8 +28,8 @@ public class UserServiceImplementation implements UserService {
         userRepository.deleteById(id);
     }
 
-    public List<UserEntity> findAll() {
-        return userRepository.findAll();
+    public Page<UserEntity> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public UserEntity findById(UUID id) {

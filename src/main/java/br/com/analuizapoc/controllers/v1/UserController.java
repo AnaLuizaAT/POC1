@@ -6,19 +6,25 @@ import br.com.analuizapoc.controllers.responses.UserResponse;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static br.com.analuizapoc.controllers.mappers.UserMapper.toDto;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/users")
+@EnableWebMvc
+@EnableSpringDataWebSupport
 public class UserController {
 
     private final UserService userService;
@@ -37,9 +43,9 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<UserResponse> findAll() {
-        List<UserEntity> entityList = userService.findAll();
-        return entityList.stream().map(UserMapper::toDto).collect(Collectors.toList());
+    public Page<UserResponse> findAll(@PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
+        Page<UserEntity> entityList = userService.findAll(pageable);
+        return entityList.map(UserMapper::toDto);
     }
 
     @DeleteMapping("/{id}")
