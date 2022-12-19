@@ -14,7 +14,6 @@ public class AddressRequest {
 
     private UUID userId;
     private String observation;
-    private Boolean mainAddress;
 
     @NotBlank
     private String number;

@@ -18,7 +18,6 @@ public class AddressMapper {
         addressEntity.setNumber(addressRequest.getNumber());
         addressEntity.setStreet(addressResponse.getStreet());
         addressEntity.setComplement(addressResponse.getComplement());
-        addressEntity.setMainAddress(addressRequest.getMainAddress());
         addressEntity.setNeighborhood(addressResponse.getNeighborhood());
         addressEntity.setUser(userEntity);
         return addressEntity;

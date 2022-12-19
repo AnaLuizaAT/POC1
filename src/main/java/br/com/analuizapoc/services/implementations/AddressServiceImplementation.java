@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,10 +42,21 @@ public class AddressServiceImplementation implements AddressService, CepService 
         return null;
     }
 
-    public AddressEntity save(AddressRequest addressRequest, String cep, UUID id) {
+    public AddressEntity save(AddressRequest addressRequest, String cep, AddressEntity addressEntity) {
         AddressResponse addressResponse = cepService.getCep(cep);
         UserEntity userEntity = userService.findById(addressRequest.getUserId());
-        AddressEntity addressEntity = mapper.toEntity(addressResponse, addressRequest, userEntity);
-        return addressRepository.save(addressEntity);
+        AddressEntity toEntity = mapper.toEntity(addressResponse, addressRequest, userEntity);
+        limitAddressesValidation(userEntity);
+        toEntity.setMainAddress(true);
+        return addressRepository.save(toEntity);
+    }
+
+    public void limitAddressesValidation(UserEntity userEntity) {
+        List<AddressEntity> addressEntities = addressRepository.findByUserOrderByDateCreated(userEntity);
+        addressEntities.forEach(addressEntity -> addressEntity.setMainAddress(false));
+        addressRepository.saveAllAndFlush(addressEntities);
+        if (addressEntities.size() >= 5) {
+            addressRepository.delete(addressEntities.get(0));
+        }
     }
 }
