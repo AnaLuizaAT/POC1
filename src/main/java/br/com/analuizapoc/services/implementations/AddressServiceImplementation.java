@@ -27,7 +27,7 @@ public class AddressServiceImplementation implements AddressService, CepService 
 
 
     public AddressEntity findById(UUID id) {
-        return null;
+        return addressRepository.getReferenceById(id);
     }
 
     public void deleteById(UUID id) {
