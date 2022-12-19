@@ -1,6 +1,8 @@
 package br.com.analuizapoc.entities;
 
 import br.com.analuizapoc.enums.UserEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +25,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "USERS")
+@Entity(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
 
@@ -33,31 +35,31 @@ public class UserEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @Column
-    @NotBlank(message = "The User Email cannot be blank")
+    @NotBlank
     private String email;
 
-    @Column
-    @NotNull(message = "The user telephone cannot be null")
+    @NotNull
     private Long telephone;
 
-    @Column
-    @NotBlank(message = "The User Document cannot be blank")
+    @NotBlank
     private String document;
 
-    @Column
-    @Enumerated
-    @NotNull(message = "The user document type cannot be null")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DOCUMENT_TYPE")
     private UserEnum documentType;
 
-    @Column
-    @LastModifiedDate
-    private LocalDateTime dateUpdate;
-
     @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime dateCreation;
+    @Column(nullable = false, name = "DATE_CREATED")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateCreated;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @LastModifiedDate
+    @Column(name = "DATE_UPDATED")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateUpdated;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AddressEntity> addressList = new ArrayList<>();
 }
