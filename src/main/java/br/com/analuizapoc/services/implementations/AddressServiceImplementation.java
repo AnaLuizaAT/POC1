@@ -26,12 +26,12 @@ public class AddressServiceImplementation implements AddressService, CepService 
     private final AddressRepository addressRepository;
 
 
-    public AddressEntity findById(UUID id) {
-        return addressRepository.getReferenceById(id);
+    public void deleteById(UUID id) {
+        addressRepository.deleteById(id);
     }
 
-    public void deleteById(UUID id) {
-        //deleteById
+    public AddressEntity findById(UUID id) {
+        return addressRepository.getReferenceById(id);
     }
 
     public AddressResponse getCep(@PathVariable String cep) {
