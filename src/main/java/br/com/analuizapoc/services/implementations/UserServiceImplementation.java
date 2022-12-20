@@ -2,6 +2,7 @@ package br.com.analuizapoc.services.implementations;
 
 import br.com.analuizapoc.controllers.mappers.UserMapper;
 import br.com.analuizapoc.controllers.requests.UserRequest;
+import br.com.analuizapoc.entities.AddressEntity;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.enums.UserEnum;
 import br.com.analuizapoc.repositories.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -44,5 +46,10 @@ public class UserServiceImplementation implements UserService {
 
     public Page<UserEntity> findByDocumentType(UserEnum userEnum, Pageable pageable) {
         return userRepository.findByDocumentType(userEnum, pageable);
+    }
+
+    public List<AddressEntity> findAddressByUserId(UUID id) {
+        var user = findById(id);
+        return user.getAddressList();
     }
 }
