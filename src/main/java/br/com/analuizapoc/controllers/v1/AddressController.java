@@ -31,4 +31,10 @@ public class AddressController {
     public AddressResponse findById(@PathVariable UUID id) {
         return toAddressDto(addressService.findById(id));
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable UUID id) {
+        addressService.deleteById(id);
+    }
 }
