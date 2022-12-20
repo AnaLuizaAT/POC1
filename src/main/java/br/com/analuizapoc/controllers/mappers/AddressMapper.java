@@ -18,6 +18,7 @@ public class AddressMapper {
         addressEntity.setNumber(addressRequest.getNumber());
         addressEntity.setStreet(addressResponse.getStreet());
         addressEntity.setComplement(addressResponse.getComplement());
+        addressEntity.setObservation(addressRequest.getObservation());
         addressEntity.setNeighborhood(addressResponse.getNeighborhood());
         addressEntity.setUser(userEntity);
         return addressEntity;
@@ -33,10 +34,17 @@ public class AddressMapper {
         addressResponse.setNumber(addressEntity.getNumber());
         addressResponse.setUserId(addressEntity.getUser().getId());
         addressResponse.setComplement(addressEntity.getComplement());
+        addressResponse.setObservation(addressEntity.getObservation());
         addressResponse.setDateUpdated(addressEntity.getDateUpdated());
         addressResponse.setMainAddress(addressEntity.getMainAddress());
         addressResponse.setDateCreated(addressEntity.getDateCreated());
         addressResponse.setNeighborhood(addressEntity.getNeighborhood());
         return addressResponse;
+    }
+
+    public static AddressEntity toUpdateAddress(AddressRequest addressRequest, AddressEntity addressEntity) {
+        addressEntity.setNumber(addressRequest.getNumber());
+        addressEntity.setObservation(addressRequest.getObservation());
+        return addressEntity;
     }
 }

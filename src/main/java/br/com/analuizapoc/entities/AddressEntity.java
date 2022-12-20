@@ -31,6 +31,7 @@ public class AddressEntity {
     private String number;
     private String street;
     private String complement;
+    private String observation;
     private String neighborhood;
 
     @JsonIgnore
