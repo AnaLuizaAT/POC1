@@ -4,6 +4,7 @@ import br.com.analuizapoc.controllers.mappers.UserMapper;
 import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.controllers.responses.UserResponse;
 import br.com.analuizapoc.entities.UserEntity;
+import br.com.analuizapoc.enums.UserEnum;
 import br.com.analuizapoc.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,17 +36,24 @@ public class UserController {
         return toDto(userService.save(userRequest));
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Page<UserResponse> findAll(@PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
+        Page<UserEntity> entityList = userService.findAll(pageable);
+        return entityList.map(UserMapper::toDto);
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserResponse findById(@PathVariable UUID id) {
         return toDto(userService.findById(id));
     }
 
-    @GetMapping
+    @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public Page<UserResponse> findAll(@PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
-        Page<UserEntity> entityList = userService.findAll(pageable);
-        return entityList.map(UserMapper::toDto);
+    public Page<UserEntity> findByDocumentType(@RequestParam String documentType, @PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
+        UserEnum userEnum = UserEnum.valueOf(documentType.toUpperCase());
+        return userService.findByDocumentType(userEnum, pageable);
     }
 
     @DeleteMapping("/{id}")
