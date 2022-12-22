@@ -4,8 +4,9 @@ import br.com.analuizapoc.controllers.mappers.UserMapper;
 import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.entities.AddressEntity;
 import br.com.analuizapoc.entities.UserEntity;
+import br.com.analuizapoc.enums.Errors;
 import br.com.analuizapoc.enums.UserEnum;
-import br.com.analuizapoc.exceptions.MainAddressException;
+import br.com.analuizapoc.exceptions.NotFoundException;
 import br.com.analuizapoc.repositories.UserRepository;
 import br.com.analuizapoc.services.UserService;
 import lombok.AllArgsConstructor;
@@ -20,37 +21,51 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserServiceImplementation implements UserService {
 
-    private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    public void deleteById(UUID id) {
-        userRepository.deleteById(id);
-    }
-
-    public UserEntity findById(UUID id) {
-        return userRepository.findById(id).orElseThrow(MainAddressException::new);
-    }
-
-    public Page<UserEntity> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
+    private final UserRepository userRepository;
 
     public UserEntity save(UserRequest userRequest) {
         UserEntity userEntity = userMapper.toEntity(userRequest);
         return userRepository.save(userEntity);
     }
 
-    public UserEntity updateById(UUID id, UserRequest userRequest) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(RuntimeException::new);
-        return userRepository.save(userMapper.toUpdateEntity(userRequest, userEntity));
+    public UserEntity findById(UUID id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(Errors.PC101.getMessage(),
+                        Errors.PC101.getCode()));
+    }
+
+    public Page<UserEntity> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    public List<AddressEntity> findAddressByUserId(UUID id) {
+        var user = findById(id);
+        try {
+            return user.getAddressList();
+        } catch (NotFoundException exception) {
+            throw new NotFoundException(Errors.PC101.getMessage(),
+                    Errors.PC101.getCode());
+        }
     }
 
     public Page<UserEntity> findByDocumentType(UserEnum userEnum, Pageable pageable) {
         return userRepository.findByDocumentType(userEnum, pageable);
     }
 
-    public List<AddressEntity> findAddressByUserId(UUID id) {
-        var user = findById(id);
-        return user.getAddressList();
+    public UserEntity updateById(UUID id, UserRequest userRequest) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(Errors.PC101.getMessage(),
+                        Errors.PC101.getCode()));
+        return userRepository.save(userMapper.toUpdateEntity(userRequest, userEntity));
+    }
+
+    public void deleteById(UUID id) {
+        try {
+            userRepository.deleteById(id);
+        } catch (NotFoundException exception) {
+            throw new NotFoundException(Errors.PC101.getMessage(),
+                    Errors.PC101.getCode());
+        }
     }
 }

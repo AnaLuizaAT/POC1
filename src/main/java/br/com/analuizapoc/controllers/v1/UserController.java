@@ -44,25 +44,18 @@ public class UserController {
         return toDto(userService.save(userRequest));
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Page<UserResponse> findAll(@PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
-        Page<UserEntity> entityList = userService.findAll(pageable);
-        return entityList.map(UserMapper::toDto);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserResponse findById(@PathVariable UUID id) {
         return toDto(userService.findById(id));
     }
 
-    @GetMapping("/search")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<UserResponse> findByDocumentType(@RequestParam String documentType, @PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
-        UserEnum userEnum = UserEnum.valueOf(documentType.toUpperCase());
-        Page<UserEntity> entityPage = userService.findByDocumentType(userEnum, pageable);
-        return entityPage.map(UserMapper::toDto);
+    public Page<UserResponse> findAll
+            (@PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
+        Page<UserEntity> entityList = userService.findAll(pageable);
+        return entityList.map(UserMapper::toDto);
     }
 
     @GetMapping("/addresses/{id}")
@@ -72,15 +65,25 @@ public class UserController {
         return addressEntities.stream().map(AddressMapper::toAddressDto).collect(Collectors.toList());
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable UUID id) {
-        userService.deleteById(id);
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<UserResponse> findByDocumentType
+            (@RequestParam String documentType,
+             @PageableDefault(size = 5, direction = Sort.Direction.ASC, sort = "id") Pageable pageable) {
+        UserEnum userEnum = UserEnum.valueOf(documentType.toUpperCase());
+        Page<UserEntity> entityPage = userService.findByDocumentType(userEnum, pageable);
+        return entityPage.map(UserMapper::toDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public UserResponse updateById(@PathVariable UUID id, @RequestBody UserRequest userRequest) {
         return toDto(userService.updateById(id, userRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable UUID id) {
+        userService.deleteById(id);
     }
 }

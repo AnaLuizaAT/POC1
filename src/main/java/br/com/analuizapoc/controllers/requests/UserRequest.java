@@ -1,9 +1,9 @@
 package br.com.analuizapoc.controllers.requests;
 
 import br.com.analuizapoc.enums.UserEnum;
-import br.com.analuizapoc.validation.CnpjGroup;
-import br.com.analuizapoc.validation.CpfGroup;
-import br.com.analuizapoc.validation.UserGroupSequenceProvider;
+import br.com.analuizapoc.validations.CnpjGroup;
+import br.com.analuizapoc.validations.CpfGroup;
+import br.com.analuizapoc.validations.UserGroupSequenceProvider;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
