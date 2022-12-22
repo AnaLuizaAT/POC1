@@ -1,1 +1,22 @@
-# anaLuizaPOC1
+# POC 1 - API REST com persistência
+    -Necessito que seja criada uma app completa de cadastro de costumer e address:
+        - Cada customer poderá ter no máximo 5 addresses cadastrados;
+        - Cada customer poderá ter apenas 1 address principal ao mesmo tempo;
+        - Cada customer deverá SEMPRE ter um address principal;
+        - CRUD de cadastro de customer e address;
+        - Opção de tornar o address como principal;
+        - Validação/Máscaras dos campos de custtomer (email, cpf/cnpj, tipo (PJ ou PF), endereço, telefone);
+        - RESTful API;
+        - Spring Boot;
+        - App 100% testada (integrados, unitários);
+        - Respeitado os conceitos SOLID;
+        - GET com paginação e filtros;
+        - Versionado no GitHub;
+        - H2.
+
+    - Pontos extras (considerados apenas se os pontos principais estiverem 100%):
+        - Lock otimista na inserção de novos registros (customer e address);
+        - Mudança de contrato (endpoint) - version;
+        - Novo cliente precisa de informação diferente do que é retornado, mas precisa manter o contrato antigo.
+        - Aplicação de cache em um endpoint da POC;
+        - Consumir endpoint público para consulta de cep (https://viacep.com.br/).

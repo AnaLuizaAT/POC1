@@ -14,7 +14,6 @@ import org.hibernate.validator.group.GroupSequenceProvider;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.GroupSequence;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

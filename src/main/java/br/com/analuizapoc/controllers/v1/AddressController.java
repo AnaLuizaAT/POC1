@@ -20,10 +20,10 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @PostMapping("/{cep}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public AddressResponse save(@Valid @RequestBody AddressRequest addressRequest, @PathVariable String cep, AddressEntity addressEntity) {
-        return toAddressDto(addressService.save(addressRequest, cep, addressEntity));
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable UUID id) {
+        addressService.deleteById(id);
     }
 
     @GetMapping("/{id}")
@@ -32,15 +32,15 @@ public class AddressController {
         return toAddressDto(addressService.findById(id));
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable UUID id) {
-        addressService.deleteById(id);
-    }
-
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public AddressResponse update(@PathVariable UUID id, @RequestBody AddressRequest addressRequest) {
         return toAddressDto(addressService.updateById(id, addressRequest));
+    }
+
+    @PostMapping("/{cep}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AddressResponse save(@Valid @RequestBody AddressRequest addressRequest, @PathVariable String cep, AddressEntity addressEntity) {
+        return toAddressDto(addressService.save(addressRequest, cep, addressEntity));
     }
 }

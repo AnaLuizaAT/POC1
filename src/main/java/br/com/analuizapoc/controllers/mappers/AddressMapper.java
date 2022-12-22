@@ -44,6 +44,7 @@ public class AddressMapper {
 
     public static AddressEntity toUpdateAddress(AddressRequest addressRequest, AddressEntity addressEntity) {
         addressEntity.setNumber(addressRequest.getNumber());
+        addressEntity.setMainAddress(addressRequest.getIsMain());
         addressEntity.setObservation(addressRequest.getObservation());
         return addressEntity;
     }
