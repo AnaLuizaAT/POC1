@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 
 import static br.com.analuizapoc.controllers.mappers.UserMapper.toDto;
 
+@EnableWebMvc
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/users")
-@EnableWebMvc
 @EnableSpringDataWebSupport
+@RequestMapping("/v1/users")
 public class UserController {
 
     private final UserService userService;

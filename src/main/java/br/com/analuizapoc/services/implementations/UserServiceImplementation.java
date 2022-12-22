@@ -5,6 +5,7 @@ import br.com.analuizapoc.controllers.requests.UserRequest;
 import br.com.analuizapoc.entities.AddressEntity;
 import br.com.analuizapoc.entities.UserEntity;
 import br.com.analuizapoc.enums.UserEnum;
+import br.com.analuizapoc.exceptions.MainAddressException;
 import br.com.analuizapoc.repositories.UserRepository;
 import br.com.analuizapoc.services.UserService;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     public UserEntity findById(UUID id) {
-        return userRepository.getReferenceById(id);
+        return userRepository.findById(id).orElseThrow(MainAddressException::new);
     }
 
     public Page<UserEntity> findAll(Pageable pageable) {
