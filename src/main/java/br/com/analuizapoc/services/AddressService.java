@@ -8,11 +8,12 @@ import java.util.UUID;
 
 @Service
 public interface AddressService {
-    void deleteById(UUID id);
+
+    AddressEntity save(AddressRequest addressRequest, String cep);
 
     AddressEntity findById(UUID id);
 
     AddressEntity updateById(UUID id, AddressRequest addressRequest);
 
-    AddressEntity save(AddressRequest addressRequest, String cep, AddressEntity addressEntity);
+    void deleteById(UUID id);
 }

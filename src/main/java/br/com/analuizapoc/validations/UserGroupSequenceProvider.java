@@ -1,4 +1,4 @@
-package br.com.analuizapoc.validation;
+package br.com.analuizapoc.validations;
 
 import br.com.analuizapoc.controllers.requests.UserRequest;
 import org.hibernate.validator.spi.group.DefaultGroupSequenceProvider;

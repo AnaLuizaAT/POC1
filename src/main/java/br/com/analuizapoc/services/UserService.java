@@ -12,15 +12,15 @@ import java.util.UUID;
 @Service
 public interface UserService {
 
-    void deleteById(UUID id);
+    UserEntity save(UserRequest userRequest);
 
     UserEntity findById(UUID id);
 
-    UserEntity save(UserRequest userRequest);
-
     Page<UserEntity> findAll(Pageable pageable);
+
+    Page<UserEntity> findByDocumentType(UserEnum userEnum, Pageable pageable);
 
     UserEntity updateById(UUID id, UserRequest userRequest);
 
-    Page<UserEntity> findByDocumentType(UserEnum userEnum, Pageable pageable);
+    void deleteById(UUID id);
 }

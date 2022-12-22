@@ -13,13 +13,35 @@ import java.time.LocalDateTime;
 public class ControllerAdvice {
 
     @ExceptionHandler(MainAddressException.class)
-    public ResponseEntity<ErrorResponse> MainAddressException(MainAddressException exception, WebRequest request) {
+    public ResponseEntity<ErrorResponse> mainAddressException(MainAddressException exception, WebRequest request) {
         ErrorResponse response = new ErrorResponse();
-        response.setPath(request.getDescription(false));
-        response.setInternalCode(exception.getErrorCode());
-        response.setHttpCode(HttpStatus.CONFLICT.value());
-        response.setMessage(exception.getMessage());
         response.setTimestamp(LocalDateTime.now());
+        response.setMessage(exception.getMessage());
+        response.setHttpCode(HttpStatus.CONFLICT.value());
+        response.setInternalCode(exception.getErrorCode());
+        response.setPath(request.getDescription(false));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> notFoundException(NotFoundException exception, WebRequest request) {
+        ErrorResponse response = new ErrorResponse();
+        response.setTimestamp(LocalDateTime.now());
+        response.setMessage(exception.getMessage());
+        response.setHttpCode(HttpStatus.NOT_FOUND.value());
+        response.setInternalCode(exception.getErrorCode());
+        response.setPath(request.getDescription(false));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(CepNotFoundException.class)
+    public ResponseEntity<ErrorResponse> cepNotFoundException(CepNotFoundException exception, WebRequest request) {
+        ErrorResponse response = new ErrorResponse();
+        response.setTimestamp(LocalDateTime.now());
+        response.setMessage(exception.getMessage());
+        response.setHttpCode(HttpStatus.BAD_REQUEST.value());
+        response.setInternalCode(exception.getErrorCode());
+        response.setPath(request.getDescription(false));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

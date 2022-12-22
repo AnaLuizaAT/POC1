@@ -13,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorResponse {
-    private Integer httpCode;
-    private String message;
-    private String internalCode;
     private String path;
+    private String message;
+    private Integer httpCode;
+    private String internalCode;
     private LocalDateTime timestamp;
     private List<FieldErrorResponse> errors;
 }
